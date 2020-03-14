@@ -5,27 +5,19 @@ mastodon_data <- read.csv("C:/Users/JORGE/Documents/MIIS_UPF/Data-Driven Social 
 #Directed graph
 mastodon_digraph <- graph.data.frame(mastodon_data,directed=TRUE)
 
-#Undirected
-mastodon_ungraph <- graph.data.frame(mastodon_data,directed=FALSE)
-
-#Find the node with highest degree
-V(mastodon_digraph)$name[degree(mastodon_digraph)==max(degree(mastodon_digraph))]
-
-#Calculate the Assorsativity  https://igraph.org/r/doc/assortativity.html
+#Assortativity of the graph
 assortativity_degree(mastodon_digraph,directed=TRUE)
 
-#direct neighbors
-neighbors(mastodon_digraph, v=which(V(mastodon_digraph)$name=="73@pawoo.net"))
-
-#n-neighbors away
-ego(mastodon_digraph, order=2, nodes=which(V(mastodon_digraph)$name=="73@pawoo.net"))
-
-
-# mean distance of the original graph
+# mean distance of the Graph
 mean_distance(mastodon_digraph)
+
+#-------------------------------------------------------------------------------#
+#-------------------------------------------------------------------------------#
 
 #node rewiring 0.05
 mastodon_digraph_rewired <- rewire(mastodon_digraph, each_edge(prob = 0.05))
+
+#mean distance after rewiring 0.05
 mean_distance(mastodon_digraph_rewired)
 
 #Assortativity after rewiring 0.05
@@ -36,5 +28,7 @@ mastodon_digraph_rewired_2 <- rewire(mastodon_digraph, each_edge(prob = 0.5))
 
 #Assortativity after rewiring 0.5
 assortativity_degree(mastodon_digraph_rewired_2,directed=TRUE)
+
+#mean distance after rewiring 0.5
 mean_distance(mastodon_digraph_rewired_2)
 
